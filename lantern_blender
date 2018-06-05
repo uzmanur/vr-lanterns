@@ -1,0 +1,42 @@
+import bpy
+import math
+
+r = 1
+h = 6*r
+
+bpy.ops.mesh.primitive_cylinder_add(location = (0,0,0))
+paper = bpy.context.active_object
+paper.scale = [r,r,h/4]
+bpy.ops.object.mode_set(mode = 'EDIT') 
+bpy.ops.mesh.select_mode(type="VERT")
+bpy.ops.mesh.select_all(action = 'DESELECT')
+bpy.ops.object.mode_set(mode = 'OBJECT')
+for i in range(0,32):
+    paper.data.vertices[2*i].select = True
+bpy.ops.object.mode_set(mode = 'EDIT')
+bpy.ops.mesh.delete(type='FACE')
+
+len = r - 0.25*r*math.sqrt(2)
+mv = len/2 + 0.25*r*math.sqrt(2)
+xMove = [0,0,mv,-mv]
+yMove = [mv,-mv,0,0]
+xRotate = [90,90,0,0]
+yRotate = [0,0,90,90]
+bpy.ops.object.mode_set(mode = 'OBJECT')
+for i in range(4):
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.ops.mesh.primitive_cylinder_add(location = (xMove[i], yMove[i], -h/4))
+    bpy.ops.object.mode_set(mode = 'OBJECT')
+    string = bpy.context.active_object
+    string.scale = [0.01*r, 0.01*r, len/2]
+    string.rotation_euler = [xRotate[i]*math.pi/180, yRotate[i]*math.pi/180, 0]
+
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.mesh.primitive_torus_add(location = (0,0,-h/4), major_radius = 0.25*r*math.sqrt(2) - 0.1*r, minor_radius = 0.1*r)
+wick = bpy.context.active_object
+
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.mesh.primitive_torus_add(location = (0,0,-h/4), major_radius = r, minor_radius = 0.02*r)
+rim = bpy.context.active_object
+
+bpy.ops.object.select_all(action='DESELECT')
