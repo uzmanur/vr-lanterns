@@ -1,3 +1,5 @@
+# python script to create lantern object in Blender
+
 import bpy
 import math
 
@@ -7,7 +9,7 @@ h = 6*r
 # paper
 bpy.ops.mesh.primitive_cylinder_add(vertices = 64, location = (0,0,0))
 paper = bpy.context.active_object
-paper.scale = [r,r,h/4]
+paper.scale = [r,r,h/4] # cylinder has radius = 2 and height = 3
 bpy.ops.object.mode_set(mode = 'EDIT') 
 bpy.ops.mesh.select_mode(type= 'VERT')
 bpy.ops.mesh.select_all(action = 'DESELECT')
@@ -16,12 +18,12 @@ bpy.ops.object.shade_smooth()
 for i in range(0,64):
     paper.data.vertices[2*i].select = True
 bpy.ops.object.mode_set(mode = 'EDIT')
-bpy.ops.mesh.delete(type='FACE')
+bpy.ops.mesh.delete(type='FACE') # opens bottom of cylinder
 bpy.ops.mesh.select_all(action = 'SELECT')
-bpy.ops.mesh.extrude_region_shrink_fatten(TRANSFORM_OT_shrink_fatten={"value":0.001})
+bpy.ops.mesh.extrude_region_shrink_fatten(TRANSFORM_OT_shrink_fatten={"value":0.001}) # extrudes "paper" mesh so both sides can display material in Unity
 
 # wires
-len = r - 0.25*r*math.sqrt(2)
+len = r - 0.25*r*math.sqrt(2) # length of wire = dist b/t rim and wick
 mv = len/2 + 0.25*r*math.sqrt(2)
 xMove = [0,0,mv,-mv]
 yMove = [mv,-mv,0,0]
