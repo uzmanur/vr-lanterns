@@ -1,4 +1,4 @@
-# python script to create lantern object in Blender
+# python script to create meshes for lantern object in Blender
 
 import bpy
 import math
