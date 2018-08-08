@@ -39,3 +39,4 @@ for i in range(0,64):
     stand.data.vertices[2*i+1].select = True
 bpy.ops.object.mode_set(mode = 'EDIT')
 bpy.ops.transform.resize(value=(2,2,2), constraint_axis=(False, False, False), constraint_orientation='NORMAL', mirror=False, proportional='ENABLED', proportional_edit_falloff='SMOOTH', proportional_size=0.5)
+bpy.ops.object.mode_set(mode = 'OBJECT')
