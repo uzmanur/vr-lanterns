@@ -1,4 +1,4 @@
-# Python script to create meshes for lantern object in Blender
+# python script to create meshes for lantern object in Blender
 
 import bpy
 import math
@@ -9,6 +9,7 @@ h = 6*r
 # paper
 bpy.ops.mesh.primitive_cylinder_add(vertices = 64, location = (0,0,0))
 paper = bpy.context.active_object
+paper.name = "Paper"
 paper.scale = [r,r,h/4] # cylinder has radius = 2 and height = 3
 bpy.ops.object.mode_set(mode = 'EDIT') 
 bpy.ops.mesh.select_mode(type= 'VERT')
@@ -35,14 +36,16 @@ for i in range(4):
     bpy.ops.mesh.primitive_cylinder_add(location = (xMove[i], yMove[i], -h/4))
     bpy.ops.object.mode_set(mode = 'OBJECT')
     bpy.ops.object.shade_smooth()
-    string = bpy.context.active_object
-    string.scale = [0.02*r, 0.02*r, len/2]
-    string.rotation_euler = [xRotate[i]*math.pi/180, yRotate[i]*math.pi/180, 0]
+    wire = bpy.context.active_object
+    wire.name = "Wire" + str(i+1)
+    wire.scale = [0.02*r, 0.02*r, len/2]
+    wire.rotation_euler = [xRotate[i]*math.pi/180, yRotate[i]*math.pi/180, 0]
 
 # wick
 bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.mesh.primitive_torus_add(location = (0,0,-h/4), major_segments = 64, minor_segments = 64, major_radius = 0.25*r*math.sqrt(2) - 0.1*r, minor_radius = 0.1*r)
 wick = bpy.context.active_object
+wick.name = "Wick"
 bpy.ops.object.shade_smooth()
 bpy.ops.object.mode_set(mode = 'EDIT')
 bpy.ops.mesh.extrude_region_shrink_fatten(TRANSFORM_OT_shrink_fatten={"value":0.001})
@@ -52,6 +55,7 @@ bpy.ops.object.mode_set(mode = 'OBJECT')
 bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.mesh.primitive_torus_add(location = (0,0,-h/4), major_radius = r, minor_radius = 0.04*r)
 rim = bpy.context.active_object
+rim.name = "Rim"
 bpy.ops.object.shade_smooth()
 
 bpy.ops.object.select_all(action='DESELECT')
