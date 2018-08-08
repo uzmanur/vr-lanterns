@@ -9,6 +9,7 @@ h = 2
 bpy.ops.mesh.primitive_cylinder_add(vertices = 64, location = (0,0,0))
 bpy.ops.object.shade_smooth()
 stand = bpy.context.active_object
+stand.name = "Stand"
 stand.scale = [r,r,h] # cylinder has radius = 1 and height = 4
 bpy.ops.object.mode_set(mode = 'EDIT') 
 bpy.ops.mesh.select_mode(type= 'VERT')
