@@ -13,6 +13,8 @@ public class Lantern : MonoBehaviour {
 		float sy = 2f; // y-component of stand
 		int r = 10; // radius of lantern spread
 
+		randomSkybox ();
+
 		GameObject cam = GameObject.Find ("Main Camera");
 		cam.transform.position = new Vector3 (0f, 5.5f, -5f);
 
@@ -82,7 +84,13 @@ public class Lantern : MonoBehaviour {
 		var fl = flame.lights;
 		fl.enabled = true;
 		fl.ratio = 1f;
-		fl.light = Resources.Load ("EffectExamples/Shared/Prefabs/ParticlesLight") as Light;
+		GameObject fire = new GameObject ("Fire");
+		Light fireLight = fire.AddComponent<Light> ();
+		fire.SetActive (false);
+		fireLight.type = LightType.Point;
+		fireLight.range = 7f;
+		fireLight.color = new Color32 (255, 174, 0, 255);
+		fl.light = fireLight;
 		fl.useRandomDistribution = false;
 		fl.useParticleColor = false;
 		fl.maxLights = 100;
@@ -106,6 +114,39 @@ public class Lantern : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void randomSkybox() {
+
+		Material sky1 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material sky2 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material sky3 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material sky4 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material sky5 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material sky6 = new Material (Shader.Find ("RenderFX/Skybox"));
+		Material[] sky = { sky1, sky2, sky3, sky4, sky5, sky6 };
+
+		Texture star1 = Resources.Load ("StarSkyBox04/StarSkyBox041") as Texture;
+		Texture star2 = Resources.Load ("StarSkyBox04/StarSkyBox042") as Texture;
+		Texture star3 = Resources.Load ("StarSkyBox04/StarSkyBox043") as Texture;
+		Texture star4 = Resources.Load ("StarSkyBox04/StarSkyBox044") as Texture;
+		Texture star5 = Resources.Load ("StarSkyBox04/StarSkyBox045") as Texture;
+		Texture star6 = Resources.Load ("StarSkyBox04/StarSkyBox046") as Texture;
+
+		Texture[] star = { star1, star2, star3, star4, star5, star6 };
+
+		for (int i = 0; i < 6; i++) {
+			sky [i].SetTexture ("_FrontTex", star [(i + 0) % 6]);
+			sky [i].SetTexture ("_BackTex", star [(i + 1) % 6]);
+			sky [i].SetTexture ("_LeftTex", star [(i + 2) % 6]);
+			sky [i].SetTexture ("_RightTex", star [(i + 3) % 6]);
+			sky [i].SetTexture ("_UpTex", star [(i + 4) % 6]);
+			sky [i].SetTexture ("_DownTex", star [(i + 5) % 6]);
+		}
+
+		System.Random rand = new System.Random ();
+		int n = rand.Next(0,6);
+		RenderSettings.skybox = sky [n];
 	}
 	
 	// Update is called once per frame
