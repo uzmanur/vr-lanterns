@@ -70,9 +70,9 @@ public class Lantern : MonoBehaviour {
 					if (a * a + b * b <= r * r) {
 						GameObject lClone = Instantiate (lantern, new Vector3 ((float) 10*a, ly, (float) 10*b), Quaternion.identity);
 						GameObject sClone = Instantiate (stand, new Vector3 ((float) 10*a, sy, (float) 10*b), Quaternion.Euler (-90f, 0f, 0f));
+						c++;
 						lClone.name = "LanternClone" + c.ToString ("000");
 						sClone.name = "StandClone" + c.ToString ("000");
-						c++;
 					}
 				}
 			}
