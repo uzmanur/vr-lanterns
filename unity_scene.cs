@@ -61,7 +61,7 @@ public class Lantern : MonoBehaviour {
 			rendWire.material = wireMat;
 		}
 
-
+		// places all lanterns inside a circle with radius of r lanterns
 		int c = 0;
 		for (int a = -r; a <= r; a++) {
 			for (int b = -r; b <= r; b++) {
@@ -79,6 +79,8 @@ public class Lantern : MonoBehaviour {
 		}
 
 
+
+//		// places all lanterns in square with side length 15
 //		for (int i = 0; i < 2; i++) {
 //			for (int j = 0; j < 112; j++) {
 //				float n = 0f;
