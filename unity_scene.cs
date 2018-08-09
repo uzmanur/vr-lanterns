@@ -9,6 +9,7 @@ public class Lantern : MonoBehaviour {
 
 		float ly = 6.5f; // y-component of lantern
 		float sy = 2f; // y-component of stand
+		int r = 10; // radius of lantern spread
 
 		GameObject cam = GameObject.Find ("Main Camera");
 		cam.transform.position = new Vector3 (0f, 5.5f, -5f);
@@ -62,17 +63,20 @@ public class Lantern : MonoBehaviour {
 
 
 		int c = 0;
-		for (int a = 0; a < 15; a++) {
-			for (int b = 0; b < 15; b++) {
+		for (int a = -r; a <= r; a++) {
+			for (int b = -r; b <= r; b++) {
 				if (a == 0 && b == 0) { continue; }
 				else {
-					if (a * a + b * b <= 15 * 15) {
+					if (a * a + b * b <= r * r) {
 						GameObject lClone = Instantiate (lantern, new Vector3 ((float) 10*a, ly, (float) 10*b), Quaternion.identity);
 						GameObject sClone = Instantiate (stand, new Vector3 ((float) 10*a, sy, (float) 10*b), Quaternion.Euler (-90f, 0f, 0f));
 						lClone.name = "LanternClone" + c.ToString ("000");
 						sClone.name = "StandClone" + c.ToString ("000");
 						c++;
 					}
+				}
+			}
+		}
 
 
 //		for (int i = 0; i < 2; i++) {
@@ -104,9 +108,9 @@ public class Lantern : MonoBehaviour {
 //		}
 
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 }
